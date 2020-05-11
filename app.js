@@ -4,7 +4,9 @@ var date = moment().format("l");
 $("#btnSubmit").on("click", function (e) {
   e.preventDefault();
   var cityName = $("#userInput").val();
+  $("#userInput").val("");
   currentWeather(cityName);
+  futureWeather(cityName);
 });
 
 function currentWeather(cityName) {
@@ -15,9 +17,14 @@ function currentWeather(cityName) {
   }).then(function (res) {
     console.log(res);
 
+    // prepends search history to ul
+    $("#searchHistory").prepend(`<li class="render">${res.name}</li>`);
+
     $("#cityName").text(res.name);
     $("#date").text(date);
-    $("#icon").prepend(
+
+    // can't figure out how to clear this after entering each city
+    $("#icon").append(
       `<img src="https://openweathermap.org/img/wn/${res.weather[0].icon}.png">`
     );
 
@@ -42,7 +49,7 @@ function currentWeather(cityName) {
 
     $.ajax({
       method: "GET",
-      url: `http://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`,
+      url: `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`,
       dataType: "json",
     }).then(function (res) {
       var uv = res.value.toFixed(0);
@@ -51,23 +58,23 @@ function currentWeather(cityName) {
   });
 }
 
-// function currentWeather(cityName) {
-//   var url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
-//   console.log(url);
-//   $.ajax({
-//     method: "GET",
-//     url: url,
-//     dataType: "json",
-//   }).then(function (data) {
-//     console.log("API Response", data);
-//     //     $("#currentWeather").append(
-//     //       `<p>Current Weather: ${data.main.temp}</p>
-//     //       <p>Wind: ${data.wind.speed}</p>
-//     //       <p>Humidty: ${data.main.humidity}</p>
-//     //       <p>Description: ${data.weather[0].main}</p>
-//     //       <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png">`
-//     //     );
-//     //     var lat = data.coord.lat;
-//     //     var lon = data.coord.lon;
-//   });
-// }
+function futureWeather(cityName) {
+  var url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}`;
+  console.log(url);
+  $.ajax({
+    method: "GET",
+    url: url,
+    dataType: "json",
+  }).then(function (res) {
+    console.log(res);
+    //     $("#currentWeather").append(
+    //       `<p>Current Weather: ${data.main.temp}</p>
+    //       <p>Wind: ${data.wind.speed}</p>
+    //       <p>Humidty: ${data.main.humidity}</p>
+    //       <p>Description: ${data.weather[0].main}</p>
+    //       <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png">`
+    //     );
+    //     var lat = data.coord.lat;
+    //     var lon = data.coord.lon;
+  });
+}

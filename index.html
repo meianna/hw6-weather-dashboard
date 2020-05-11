@@ -11,20 +11,20 @@
 
 <body>
 
-  <div class="jumbotron text-center">
+  <header class="jumbotron bg-primary text-light text-center">
     <h1>Weather Dashboard</h1>
-  </div>
+  </header>
 
-  <div class="container text-center">
+  <section class="container">
     <form>
       <input type="text" id="userInput">
       <button id="btnSubmit">Submit</button>
     </form>
-  </div>
+    <br>
+    <ul id="searchHistory"></ul>
+  </section>
 
-  <br>
-
-  <div class="container text-center" id="currentWeather">
+  <section class="container text-center" id="currentWeather">
     <h3 id="cityName"></h3>
     <h4 id="date"></h4>
     <div id="icon"></div>
@@ -32,14 +32,56 @@
     <h4 id="humidity"></h4>
     <h4 id="wind"></h4>
     <h4 id="uv"></h4>
-  </div>
+  </section>
 
   <br>
 
-  <div class="container text-center" id="futureWeather">
+  <section class="container text-center" id="futureWeather">
 
 
-  </div>
+    <div class="row row-cols-1 row-cols-md-5">
+      <div class="col mb-4">
+        <div class="card bg-primary">
+          <div class="card-body text-white">
+            <h5 class="card-title" id="dateForecast1"></h5>
+            <p class="card-text" id="forecast1"></p>
+          </div>
+        </div>
+      </div>
+      <div class="col mb-4">
+        <div class="card bg-primary">
+          <div class="card-body text-white">
+            <h5 class="card-title" id="dateForecast2"></h5>
+            <p class="card-text" id="forecast2"></p>
+          </div>
+        </div>
+      </div>
+      <div class="col mb-4">
+        <div class="card bg-primary">
+          <div class="card-body text-white">
+            <h5 class="card-title" id="dateForecast3"></h5>
+            <p class="card-text" id="forecast3"></p>
+          </div>
+        </div>
+      </div>
+      <div class="col mb-4">
+        <div class="card bg-primary">
+          <div class="card-body text-white">
+            <h5 class="card-title" id="dateForecast4"></h5>
+            <p class="card-text" id="forecast4"></p>
+          </div>
+        </div>
+      </div>
+      <div class="col mb-4">
+        <div class="card bg-primary">
+          <div class="card-body text-white">
+            <h5 class="card-title" id="dateForecast5"></h5>
+            <p class="card-text" id="forecast5"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
