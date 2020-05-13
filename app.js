@@ -24,7 +24,7 @@ function currentWeather(cityName) {
     $("#date").text(date);
 
     // can't figure out how to clear this after entering each city
-    $("#icon").append(
+    $("#icon").html(
       `<img src="https://openweathermap.org/img/wn/${res.weather[0].icon}.png">`
     );
 
@@ -59,14 +59,19 @@ function currentWeather(cityName) {
 }
 
 function futureWeather(cityName) {
-  var url = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}`;
-  console.log(url);
   $.ajax({
     method: "GET",
-    url: url,
+    url: `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}`,
     dataType: "json",
   }).then(function (res) {
     console.log(res);
+    // adding forecast dates to html
+    $("#dateForecast1").text(res.list[2].dt_txt);
+    $("#dateForecast2").text(res.list[10].dt_txt);
+    $("#dateForecast3").text(res.list[18].dt_txt);
+    $("#dateForecast4").text(res.list[26].dt_txt);
+    $("#dateForecast5").text(res.list[34].dt_txt);
+
     //     $("#currentWeather").append(
     //       `<p>Current Weather: ${data.main.temp}</p>
     //       <p>Wind: ${data.wind.speed}</p>
@@ -74,7 +79,5 @@ function futureWeather(cityName) {
     //       <p>Description: ${data.weather[0].main}</p>
     //       <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png">`
     //     );
-    //     var lat = data.coord.lat;
-    //     var lon = data.coord.lon;
   });
 }
