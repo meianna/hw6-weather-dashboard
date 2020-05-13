@@ -3,10 +3,11 @@ $(document).ready(function () {
   var apiKey = "287b19e546f827a01d779e91f3882bc3";
   var date = moment().format("l");
 
-  // hiding forecast until submit button is clicked
+  // hiding currentWeather and futureWeather containers until submit button is clicked
+  $("#currentWeather").hide();
   $("#futureWeather").hide();
 
-  // Submit button on click function
+  // Submit button on click function triggers everything
   $("#btnSubmit").on("click", function (e) {
     e.preventDefault();
     var cityName = $("#userInput").val();
@@ -17,6 +18,10 @@ $(document).ready(function () {
 
   // current weather function
   function currentWeather(cityName) {
+    // showing currentWeather container
+    $("#currentWeather").show();
+
+    // accessing weather API and console logging result
     $.ajax({
       method: "GET",
       url: `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`,
@@ -53,11 +58,12 @@ $(document).ready(function () {
       var wind = windSpeedMPH.toFixed(0);
       $("#wind").text(`Wind Speed: ${wind} mph`);
 
-      // creating separate API request for UV Index and adding to html. This dats seems incorrect, way too high
-      // can't figure out if I'm supposed to convert the value somehow
+      // declaring vars for lat and lon coordinates to get UV index
       var lat = res.coord.lat;
       var lon = res.coord.lon;
 
+      // creating separate API request for UV Index and adding to html.
+      // This dats seems incorrect, way too high. Can't figure out if I'm supposed to convert the value somehow
       $.ajax({
         method: "GET",
         url: `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`,
@@ -69,10 +75,12 @@ $(document).ready(function () {
     });
   }
 
-  // forecast weather function
+  // 5-day forecast weather function
   function futureWeather(cityName) {
     // showing forecast container
     $("#futureWeather").show();
+
+    // accessing forecast API and console logging result
     $.ajax({
       method: "GET",
       url: `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}`,
