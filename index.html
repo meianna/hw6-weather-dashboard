@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
   <title>Weather Dashboard</title>
 </head>
 
@@ -18,30 +19,38 @@
 
   <!-- container with search form/button and search history list -->
   <section class="container">
-    <form>
-      <h5>Search for a city:</h5>
-      <input type="text" id="userInput">
-      <button id="btnSubmit">Submit</button>
-    </form>
-    <br>
-    <ul id="searchHistory"></ul>
-  </section>
-
-  <!-- currentWeather container with current weather info -->
-  <section class="container text-center" id="currentWeather">
-    <div class="card border-primary text-center" style="width: 400px">
-      <div class="card-header">
-        <h3 class="card-title" id="cityName"></h3>
-        <h4 id="date"></h4>
+    <div class="row">
+      <div class="col-md-4">
+        <form>
+          <h5>Search for a city:</h5>
+          <input type="text" id="userInput">
+          <button id="btnSubmit">Submit</button>
+        </form>
+        <br>
+        <ul id="searchHistory"></ul>
       </div>
-      <div class="card-body text-primary card-text">
-        <div id="icon"></div>
-        <h4 id="temp"></h4>
-        <h4 id="humidity"></h4>
-        <h4 id="wind"></h4>
-        <h4 id="uv"></h4>
+
+      <!-- currentWeather container with current weather info -->
+      <div class="col-md-8">
+        <section class="container text-center" id="currentWeather">
+          <div class="card border-primary text-center">
+            <div class="card-header">
+              <h2 class="card-title" id="cityName"></h2>
+              <h5 id="day"></h5>
+              <h5 id="date"></h5>
+            </div>
+            <div class="card-body text-primary card-text">
+              <div id="icon"></div>
+              <h4 id="temp"></h4>
+              <h4 id="humidity"></h4>
+              <h4 id="wind"></h4>
+              <h4 id="uv"></h4>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
+
   </section>
 
   <br>
