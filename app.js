@@ -72,13 +72,12 @@ $(document).ready(function () {
         dataType: "json",
       }).then(function (res) {
         var uv = res.value.toFixed(0);
-        $("#uv").text(`UV Index: ${uv}`);
-        if ((uv) => 8) {
-          $("#uv").addClass("uvSevere");
-        } else if ((uv) => 5) {
-          $("#uv").addClass("uvModerate");
+        if (uv >= 8) {
+          $("#uv").html(`<p class="uvSevere">UV Index:  ${uv}</p>`);
+        } else if (uv <= 7 && uv >= 5) {
+          $("#uv").html(`<p class="uvModerate">UV Index: ${uv}</p>`);
         } else {
-          $("#uv").addClass("uvFavorable");
+          $("#uv").html(`<p class="uvFavorable">UV Index:  ${uv}</p>`);
         }
       });
     });
@@ -175,13 +174,12 @@ $(document).ready(function () {
           dataType: "json",
         }).then(function (res) {
           var uv = res.value.toFixed(0);
-          $("#uv").text(`UV Index: ${uv}`);
-          if ((uv) => 8) {
-            $("#uv").addClass("uvSevere");
-          } else if ((uv) => 5) {
-            $("#uv").addClass("uvModerate");
+          if (uv >= 8) {
+            $("#uv").html(`<p class="uvSevere">UV Index:  ${uv}</p>`);
+          } else if (uv <= 7 && uv >= 5) {
+            $("#uv").html(`<p class="uvModerate">UV Index: ${uv}</p>`);
           } else {
-            $("#uv").addClass("uvFavorable");
+            $("#uv").html(`<p class="uvFavorable">UV Index:  ${uv}</p>`);
           }
         });
       });
