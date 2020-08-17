@@ -23,6 +23,7 @@ $(document).ready(function () {
   function currentWeather(cityName) {
     // showing currentWeather container
     $("#currentWeather").show();
+    $("#searchHistory").show();
 
     // accessing weather API
     $.ajax({
