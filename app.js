@@ -3,12 +3,14 @@ $(document).ready(function () {
   var apiKey = "287b19e546f827a01d779e91f3882bc3";
   var day = moment().format("dddd");
   var date = moment().format("l");
+  var cities = JSON.parse(localStorage.getItem("cities")) || [];
 
   // hiding currentWeather and futureWeather containers until submit button is clicked
   $("#currentWeather").hide();
   $("#futureWeather").hide();
+  $("#serachHistory").hide();
 
-  history();
+  // history();
 
   // Submit button on click function
   $("#btnSubmit").on("click", function (e) {
@@ -33,14 +35,26 @@ $(document).ready(function () {
       var windSpeedMPS = res.wind.speed;
       var windSpeedMPH = windSpeedMPS * 2.237;
       var wind = windSpeedMPH.toFixed(0);
-      // adds search history to ul
-      $("#searchHistory").prepend(`<li class="previousCity">${res.name}</li>`);
-      var previousSearch = JSON.parse(localStorage.getItem("city")) || [];
-      console.log(previousSearch);
-      previousSearch.push(res.name);
-      localStorage.setItem("city", JSON.stringify(previousSearch));
+
+      // seach history/local storage
+      if (cities.indexOf(cityName) === -1) {
+        cities.push(res.name);
+      }
+      localStorage.setItem("cities", JSON.stringify(cities));
+      $("#searchHistory").html("");
+      for (var i = 0; i < cities.length; i++) {
+        $("#searchHistory").prepend(`
+        <li class="list-group-item">${cities[i]}</li>  
+        `);
+        $("li").click(function (event) {
+          $("input").val($(this).text());
+          $("#btnSubmit").click();
+        });
+      }
+
+      // current weather info
       $("#weather").html(`<div class="card-header">
-      <h2 class="card-title" id="cityName"></h2>
+      <h2 class="card-title" id="cityName">${res.name}</h2>
       <h5>${day}</h5>
       <h5>${date}</h5>
     </div>
@@ -51,10 +65,8 @@ $(document).ready(function () {
       <h4>Temperature: ${res.main.temp.toFixed(0)}°F</h4>
       <h4>Humidity: ${res.main.humidity}%</h4>
       <h4>Wind Speed: ${wind} mph</h4>
-      
+      <h4 id="uv"></h4>
     </div>`);
-      // adds city name to html
-      $("#cityName").text(res.name);
 
       // declaring vars for lat and lon coordinates to get UV index
       var lat = res.coord.lat;
@@ -67,15 +79,20 @@ $(document).ready(function () {
         url: `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`,
         dataType: "json",
       }).then(function (res) {
-        var uv = res.value.toFixed(0);
+        const uv = res.value.toFixed(0);
+        console.log(uv);
+        $("#uv").html(
+          "UV Index: " +
+            '<span class="badge badge-light text-white" id="uvColor">' +
+            uv +
+            "</span>"
+        );
         if (uv >= 8) {
-          $("#weather").append(`<h4 class="uvSevere">UV Index:  ${uv}</h4>`);
+          $("#uvColor").css("background-color", "crimson");
         } else if (uv <= 7 && uv >= 5) {
-          $("#weather").append(`<h4 class="uvModerate">UV Index: ${uv}</h4>`);
+          $("#uvColor").css("background-color", "royalblue");
         } else {
-          $("#weather").append(
-            `<h4> class="uvFavorable">UV Index:  ${uv}</h4>`
-          );
+          $("#uvColor").css("background-color", "limegreen");
         }
       });
     });
@@ -115,21 +132,4 @@ $(document).ready(function () {
       }
     });
   }
-
-  // search history on click function
-  function history() {
-    var searchHistory = JSON.parse(localStorage.getItem("city")) || [];
-    $("#searchHistory").empty();
-    for (i = 0; i < searchHistory.length; i++) {
-      $("#searchHistory").prepend(
-        `<li class="previousCity">${searchHistory[i]}</li>`
-      );
-    }
-  }
-  $(document).on("click", ".previousCity", function () {
-    var text = $(this).text();
-    console.log(text);
-    currentWeather(text);
-    futureWeather(text);
-  });
 });
