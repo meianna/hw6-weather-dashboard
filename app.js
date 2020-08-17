@@ -8,9 +8,7 @@ $(document).ready(function () {
   // hiding currentWeather and futureWeather containers until submit button is clicked
   $("#currentWeather").hide();
   $("#futureWeather").hide();
-  $("#serachHistory").hide();
-
-  // history();
+  $("#searchHistory").hide();
 
   // Submit button on click function
   $("#btnSubmit").on("click", function (e) {
